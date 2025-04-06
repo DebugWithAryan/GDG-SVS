@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Blockchain Voting System</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #059669;
+            --light: #f3f4f6;
+            --dark: #1f2937;
+            --danger: #dc2626;
+            --success: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9fafb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .hero {
+            padding: 3rem 0;
+            background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.7)), url('/api/placeholder/1200/800') center/cover;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #047857;
+        }
+        
+        .btn-light {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-light:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            padding: 1.5rem;
+            margin: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            background-color: var(--light);
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        .step h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature h3 {
+            margin-bottom: 1rem;
+        }
+        
+        /* Registration Form */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 2rem;
+        }
+        
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .camera-container {
+            width: 100%;
+            height: 300px;
+            background-color: #f3f4f6;
+            border: 1px dashed #d1d5db;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .captured-image {
+            max-width: 100%;
+            max-height: 280px;
+            display: none;
+        }
+        
+        .qr-code {
+            max-width: 200px;
+            margin: 0 auto;
+            display: none;
+        }
+        
+        .verification-status {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d1fae5;
+            color: var(--success);
+            border: 1px solid #a7f3d0;
+        }
+        
+        .error {
+            background-color: #fee2e2;
+            color: var(--danger);
+            border: 1px solid #fecaca;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+            }
+            
+            .step {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i>🗳️</i> SecureVote
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#register">Register</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Secure Blockchain Voting System</h1>
+            <p>A modern, transparent and secure electronic voting solution powered by blockchain technology to ensure the integrity of the democratic process.</p>
+            <a href="#register" class="btn">Register to Vote</a>
+            <a href="#verify" class="btn btn-light">Verify Status</a>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+            </div>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h3>Registration</h3>
+                    <p>Register using our secure facial recognition system combined with your voter ID verification to ensure authenticity.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h3>QR Code</h3>
+                    <p>Once verified, you'll receive a unique QR code that grants access to voting on election day.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h3>Voting</h3>
+                    <p>At the voting center, scan your QR code and cast your vote securely through our blockchain-powered system.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" style="background-color: #f1f5f9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>System Features</h2>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure Authentication</h3>
+                    <p>Multi-factor authentication using facial recognition and document verification ensures only eligible voters can register.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⛓️</div>
+                    <h3>Blockchain Technology</h3>
+                    <p>All votes are recorded on a blockchain, making them immutable, transparent, and resistant to tampering or fraud.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">👤</div>
+                    <h3>Privacy Preservation</h3>
+                    <p>Your vote remains anonymous while still being verifiable through our advanced cryptographic protocols.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>Accessible Platform</h3>
+                    <p>Register from anywhere using our mobile-friendly platform, making the registration process convenient for all citizens.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="register">
+        <div class="container">
+            <div class="section-title">
+                <h2>Voter Registration</h2>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="register">Register</div>
+                <div class="tab" data-tab="verify">Verify Status</div>
+                <div class="tab" data-tab="qr">View QR Code</div>
+            </div>
+            
+            <div id="register-tab" class="tab-content active">
+                <div class="form-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" class="form-control" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="voter-id">Voter ID Number</label>
+                    <input type="text" id="voter-id" class="form-control" placeholder="Enter your voter ID number">
+                </div>
+                <div class="form-group">
+                    <label>Face Verification</label>
+                    <div class="camera-container" id="camera">
+                        <i style="font-size: 3rem;">📷</i>
+                        <p>Camera will appear here</p>
+                        <button class="btn btn-primary" id="start-camera" style="margin-top: 1rem;">Start Camera</button>
+                        <img id="captured-photo" class="captured-image">
+                    </div>
+                    <button class="btn btn-primary" id="capture-btn" style="display: none;">Capture Photo</button>
+                    <button class="btn" id="retake-btn" style="display: none;">Retake</button>
+                </div>
+                <div class="form-group">
+                    <label for="id-document">Upload Voter ID Document</label>
+                    <input type="file" id="id-document" class="form-control">
+                </div>
+                <div class="verification-status" id="registration-status"></div>
+                <button class="btn btn-primary" id="register-btn">Register</button>
+            </div>
+            
+            <div id="verify-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="verify-voter-id">Voter ID Number</label>
+                    <input type="text" id="verify-voter-id" class="form-control" placeholder="Enter your voter ID number">
+                </div>
+                <div class="verification-status" id="verify-status"></div>
+                <button class="btn btn-primary" id="verify-btn">Verify Status</button>
+            </div>
+            
+            <div id="qr-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="qr-voter-id">Voter ID Number</label>
+                    <input type="text" id="qr-voter-id" class="form-control" placeholder="Enter your voter ID number">
+                </div>
+                <div class="form-group">
+                    <img src="/api/placeholder/200/200" alt="QR Code" class="qr-code" id="qr-code">
+                </div>
+                <div class="verification-status" id="qr-status"></div>
+                <button class="btn btn-primary" id="get-qr-btn">Get QR Code</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="logo">
+                <i>🗳️</i> SecureVote
+            </div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#features">Features</a>
+                <a href="#register">Register</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p>&copy; 2025 SecureVote. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to current tab and content
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Camera simulation
+        const startCameraBtn = document.getElementById('start-camera');
+        const captureBtn = document.getElementById('capture-btn');
+        const retakeBtn = document.getElementById('retake-btn');
+        const cameraContainer = document.getElementById('camera');
+        const capturedPhoto = document.getElementById('captured-photo');
+        
+        startCameraBtn.addEventListener('click', () => {
+            startCameraBtn.style.display = 'none';
+            cameraContainer.innerHTML = '<video id="video" width="100%" height="280px" autoplay></video>';
+            captureBtn.style.display = 'inline-block';
+            
+            // In a real app, we would use:
+            // navigator.mediaDevices.getUserMedia({video: true})
+            // For demo, we'll simulate this
+            setTimeout(() => {
+                const video = document.getElementById('video');
+                if (video) {
+                    video.src = '/api/placeholder/400/300';
+                }
+            }, 1000);
+        });
+        
+        captureBtn.addEventListener('click', () => {
+            capturedPhoto.src = '/api/placeholder/400/300';
+            capturedPhoto.style.display = 'block';
+            captureBtn.style.display = 'none';
+            retakeBtn.style.display = 'inline-block';
+            
+            const video = document.getElementById('video');
+            if (video) {
+                video.style.display = 'none';
+            }
+        });
+        
+        retakeBtn.addEventListener('click', () => {
+            capturedPhoto.style.display = 'none';
+            retakeBtn.style.display = 'none';
+            startCameraBtn.style.display = 'inline-block';
+            cameraContainer.innerHTML = '<i style="font-size: 3rem;">📷</i><p>Camera will appear here</p><button class="btn btn-primary" id="start-camera" style="margin-top: 1rem;">Start Camera</button>';
+            
+            const newStartBtn = document.getElementById('start-camera');
+            newStartBtn.addEventListener('click', () => {
+                startCameraBtn.click();
+            });
+        });
+        
+        // Registration process simulation
+        const registerBtn = document.getElementById('register-btn');
+        const registrationStatus = document.getElementById('registration-status');
+        
+        registerBtn.addEventListener('click', () => {
+            const fullName = document.getElementById('full-name').value;
+            const voterId = document.getElementById('voter-id').value;
+            const idDocument = document.getElementById('id-document').value;
+            
+            if (!fullName || !voterId || !idDocument || capturedPhoto.style.display !== 'block') {
+                registrationStatus.textContent = 'Please fill all fields and complete face verification.';
+                registrationStatus.className = 'verification-status error';
+                registrationStatus.style.display = 'block';
+                return;
+            }
+            
+            // Simulate API call with loading
+            registerBtn.disabled = true;
+            registerBtn.textContent = 'Processing...';
+            
+            setTimeout(() => {
+                registrationStatus.textContent = 'Registration successful! Your information has been verified. You can now access your QR code in the "View QR Code" tab.';
+                registrationStatus.className = 'verification-status success';
+                registrationStatus.style.display = 'block';
+                registerBtn.disabled = false;
+                registerBtn.textContent = 'Register';
+            }, 2000);
+        });
+        
+        // Verification process simulation
+        const verifyBtn = document.getElementById('verify-btn');
+        const verifyStatus = document.getElementById('verify-status');
+        
+        verifyBtn.addEventListener('click', () => {
+            const voterId = document.getElementById('verify-voter-id').value;
+            
+            if (!voterId) {
+                verifyStatus.textContent = 'Please enter your Voter ID number.';
+                verifyStatus.className = 'verification-status error';
+                verifyStatus.style.display = 'block';
+                return;
+            }
+            
+            // Simulate API call with loading
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = 'Verifying...';
+            
+            setTimeout(() => {
+                verifyStatus.textContent = 'Verification successful! You are registered to vote. Your QR code is ready.';
+                verifyStatus.className = 'verification-status success';
+                verifyStatus.style.display = 'block';
+                verifyBtn.disabled = false;
+                verifyBtn.textContent = 'Verify Status';
+            }, 1500);
+        });
+        
+        // QR code process simulation
+        const getQrBtn = document.getElementById('get-qr-btn');
+        const qrCode = document.getElementById('qr-code');
+        const qrStatus = document.getElementById('qr-status');
+        
+        getQrBtn.addEventListener('click', () => {
+            const voterId = document.getElementById('qr-voter-id').value;
+            
+            if (!voterId) {
+                qrStatus.textContent = 'Please enter your Voter ID number.';
+                qrStatus.className = 'verification-status error';
+                qrStatus.style.display = 'block';
+                qrCode.style.display = 'none';
+                return;
+            }
+            
+            // Simulate API call with loading
+            getQrBtn.disabled = true;
+            getQrBtn.textContent = 'Generating...';
+            
+            setTimeout(() => {
+                qrCode.style.display = 'block';
+                qrStatus.textContent = 'Your QR code has been generated successfully. Please save it and bring it with you to the voting center on election day.';
+                qrStatus.className = 'verification-status success';
+                qrStatus.style.display = 'block';
+                getQrBtn.disabled = false;
+                getQrBtn.textContent = 'Get QR Code';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
