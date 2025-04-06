@@ -11,10 +11,6 @@ SecureVote is a modern electronic voting platform that leverages blockchain tech
 - **Accessible Platform**: Mobile-friendly design for registration from any device
 - **QR Code System**: Unique codes for secure voting access on election day
 
-## 🚀 Demo
-
-A live demo of the front-end interface is available at: [https://yourusername.github.io/securevote](https://yourusername.github.io/securevote)
-
 ## 📋 System Requirements
 
 - Modern web browser (Chrome, Firefox, Safari, Edge)
