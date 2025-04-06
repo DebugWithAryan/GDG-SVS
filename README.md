@@ -28,17 +28,6 @@ SecureVote is a modern electronic voting platform that leverages blockchain tech
 
 ## 💻 Installation & Setup
 
-### Local Development
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/securevote.git
-
-# Navigate to the project directory
-cd securevote
-
-# Open the project in your browser
-open index.html
-```
 
 ### Backend Integration (Not Included)
 This repository contains only the frontend prototype. For a complete voting system, you would need to:
