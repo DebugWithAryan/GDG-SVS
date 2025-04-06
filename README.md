@@ -52,19 +52,6 @@ This repository contains only the frontend prototype. For a complete voting syst
 - [ ] Voting station interface
 - [ ] Result tabulation and verification
 
-## 🤝 Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Contact
-
-- **Developer**: [Your Name](https://github.com/yourusername)
-- **Email**: your.email@example.com
-- **Project Link**: [https://github.com/yourusername/securevote](https://github.com/yourusername/securevote)
 
 ## 🙏 Acknowledgments
 
